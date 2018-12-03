@@ -1,0 +1,397 @@
+<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+  <script type="text/javascript">
+    try{ace.settings.loadState('sidebar')}catch(e){}
+  </script>
+
+  <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+      <a  class="btn btn-success" href="{:url('Index/index/index')}" target="_blank" title="前台首页">
+        <i class="ace-icon fa fa-globe"></i>
+      </a>
+
+      <a class="btn btn-info" href="javascript:;" data-rel="tooltip" data-placement="bottom" title="添加文章">
+        <i class="ace-icon fa fa-pencil"></i>
+      </a>
+
+      <a class="btn btn-warning" href="{:url('Sys/seo')}" data-rel="tooltip" data-placement="bottom" title="网站优化">
+        <i class="ace-icon fa fa-wrench"></i>
+      </a>
+
+      <button class="btn btn-danger tooltip-error" id="cache" data-rel="tooltip" data-placement="bottom" title="清除缓存">
+        <i class="ace-icon fa fa-refresh"></i>
+      </button>
+    </div>
+<script>
+$(function(){
+	$("#cache").on(ace.click_event,function(){
+	    layer.confirm('确认要清除缓存?',{icon: 3},function (index) {
+	    	$.post("{:url('Index/clearruntime')}",{user:1},function(data){
+	    		layer.alert("缓存清理成功");
+	    		});
+	      layer.close(index);
+	    });
+	  })
+	
+	});
+</script>
+    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+      <span class="btn btn-success"></span>
+
+      <span class="btn btn-info"></span>
+
+      <span class="btn btn-warning"></span>
+
+      <span class="btn btn-danger"></span>
+    </div>
+  </div><!-- /.sidebar-shortcuts -->
+
+  <ul class="nav nav-list">
+    {if condition="CONTROLLER_NAME eq 'Index'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('Index/index')}">
+        <i class="menu-icon fa fa-tachometer"></i>
+        <span class="menu-text"> 控制台 </span>
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+
+    {if condition="CONTROLLER_NAME eq 'Sys'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-desktop"></i>
+        <span class="menu-text"> 网站设置 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+      <ul class="submenu">
+        {if condition="ACTION_NAME eq 'seting'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Sys/seting')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            基本信息
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'seo'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Sys/seo')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            网站优化
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+      </ul>
+    </li>
+
+    {if condition="CONTROLLER_NAME eq 'Lb'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-picture-o"></i>
+        <span class="menu-text"> 广告图管理 </span>
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+      <ul class="submenu">
+       {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Lb/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            图片列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'place'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Lb/place')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            广告位
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+      </ul>
+    </li>
+    
+    {if condition="CONTROLLER_NAME eq 'Shops'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-balance-scale"></i>
+        <span class="menu-text"> 店铺管理 </span>
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+      <ul class="submenu">
+       {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Shops/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            店铺列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        
+         {if condition="ACTION_NAME eq 'add'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Shops/add')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            添加店铺
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+      </ul>
+    </li>
+
+    {if condition="CONTROLLER_NAME eq 'About'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-map-signs"></i>
+        <span class="menu-text"> 集团介绍</span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        {if condition="ACTION_NAME eq 'index'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/index')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+           集团简介
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+       {if condition="ACTION_NAME eq 'speak'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/speak')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            总裁致辞
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        
+        {if condition="ACTION_NAME eq 'honor'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/honor')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            资质荣誉
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        
+        {if condition="ACTION_NAME eq 'ideal'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/ideal')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            集团理念
+          </a>
+          
+          {if condition="ACTION_NAME eq 'type'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/type')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            组织分类
+          </a>
+          {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('About/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            组织列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+     
+      </ul>
+
+    </li>
+    
+       {if condition="CONTROLLER_NAME eq 'Cases'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-paper-plane"></i>
+        <span class="menu-text"> 产品中心 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Cases/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            产品列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+     {if condition="ACTION_NAME eq 'type'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Cases/type')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            分类列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        
+
+
+     
+      </ul>
+
+    </li>
+    
+     {if condition="CONTROLLER_NAME eq 'News'"}<li class="open">{else /}<li class="">{/if}
+    <a href="#" class="dropdown-toggle">
+      <i class="menu-icon fa fa-share"></i>
+      <span class="menu-text"> 新闻中心 </span>
+
+      <b class="arrow fa fa-angle-down"></b>
+    </a>
+
+    <b class="arrow"></b>
+
+    <ul class="submenu">
+      {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('News/lister')}">
+        <i class="menu-icon fa fa-caret-right"></i>
+        新闻列表
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+    
+    {if condition="ACTION_NAME eq 'type'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('News/type')}">
+        <i class="menu-icon fa fa-caret-right"></i>
+       分类列表
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+ 
+
+
+    </ul>
+
+  </li>
+    
+    
+    {if condition="CONTROLLER_NAME eq 'Culture'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-paper-plane"></i>
+        <span class="menu-text"> 集团文化 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        {if condition="ACTION_NAME eq 'index'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Culture/index')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            文化建设
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+    {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Culture/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            文化沙龙
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+ 
+     
+      </ul>
+
+    </li>
+    
+     {if condition="CONTROLLER_NAME eq 'Job'"}<li class="open">{else /}<li class="">{/if}
+    <a href="#" class="dropdown-toggle">
+      <i class="menu-icon fa fa-user"></i>
+      <span class="menu-text"> 在线招聘 </span>
+
+      <b class="arrow fa fa-angle-down"></b>
+    </a>
+
+    <b class="arrow"></b>
+
+    <ul class="submenu">
+      {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('Job/lister')}">
+        <i class="menu-icon fa fa-caret-right"></i>
+        招聘列表
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+
+    </ul>
+
+  </li>
+    
+     {if condition="CONTROLLER_NAME eq 'Team'"}<li class="open">{else /}<li class="">{/if}
+    <a href="#" class="dropdown-toggle">
+      <i class="menu-icon fa fa-heart"></i>
+      <span class="menu-text"> 团队展示 </span>
+
+      <b class="arrow fa fa-angle-down"></b>
+    </a>
+
+    <b class="arrow"></b>
+
+    <ul class="submenu">
+      {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('Team/lister')}">
+        <i class="menu-icon fa fa-caret-right"></i>
+        团队列表
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+
+    </ul>
+
+  </li>
+
+
+
+{if condition="CONTROLLER_NAME eq 'Message'"}<li class="open">{else /}<li class="">{/if}
+    <a href="#" class="dropdown-toggle">
+      <i class="menu-icon fa fa-bullhorn"></i>
+      <span class="menu-text"> 留言列表 </span>
+
+      <b class="arrow fa fa-angle-down"></b>
+    </a>
+
+    <b class="arrow"></b>
+
+    <ul class="submenu">
+    {if condition="ACTION_NAME eq 'index'"}<li class="active">{else /}<li class="">{/if}
+      <a href="{:url('Message/index')}">
+        <i class="menu-icon fa fa-caret-right"></i>
+        留言列表
+      </a>
+
+      <b class="arrow"></b>
+    </li>
+  
+    
+
+    </ul>
+
+  </li>
+  
+  
+
+  
+    
+  </ul><!-- /.nav-list -->
+
+  <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+    <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+  </div>
+</div>
