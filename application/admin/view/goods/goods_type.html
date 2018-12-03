@@ -86,7 +86,6 @@
                 </form>
               </table>
               <div class="text-center">
-                {$list->render();}
               </div>
             </div>
             <!-- PAGE CONTENT BEGINS -->
@@ -112,7 +111,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right" for="">分类名称</label>
               <div class="col-sm-8">
-                <input id="name" class="form-control" type="text" name="name" required>
+                <input id="name" class="form-control" type="text" name="type_name" required>
               </div>
             </div>
             
@@ -124,7 +123,7 @@
               </div>
             </div>
             
-            <input id="id" name="id" type="hidden">
+            <input id="id" type="hidden">
             
              <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

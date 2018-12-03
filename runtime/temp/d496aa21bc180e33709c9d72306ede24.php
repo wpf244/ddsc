@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:72:"D:\www\12_03_ddsc\public/../application/admin\view\goods\goods_type.html";i:1543819780;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543820030;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:72:"D:\www\12_03_ddsc\public/../application/admin\view\goods\goods_type.html";i:1543828087;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543821766;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -684,7 +684,6 @@ $(function(){
                 </form>
               </table>
               <div class="text-center">
-                <?php echo $list->render();; ?>
               </div>
             </div>
             <!-- PAGE CONTENT BEGINS -->
@@ -710,7 +709,7 @@ $(function(){
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right" for="">分类名称</label>
               <div class="col-sm-8">
-                <input id="name" class="form-control" type="text" name="name" required>
+                <input id="name" class="form-control" type="text" name="type_name" required>
               </div>
             </div>
             
@@ -722,7 +721,7 @@ $(function(){
               </div>
             </div>
             
-            <input id="id" name="id" type="hidden">
+            <input id="id" type="hidden">
             
              <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
