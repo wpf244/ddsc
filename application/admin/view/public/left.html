@@ -144,71 +144,10 @@ $(function(){
       </ul>
     </li>
 
-    {if condition="CONTROLLER_NAME eq 'About'"}<li class="open">{else /}<li class="">{/if}
-      <a href="#" class="dropdown-toggle">
-        <i class="menu-icon fa fa-map-signs"></i>
-        <span class="menu-text"> 集团介绍</span>
-
-        <b class="arrow fa fa-angle-down"></b>
-      </a>
-
-      <b class="arrow"></b>
-
-      <ul class="submenu">
-        {if condition="ACTION_NAME eq 'index'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/index')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-           集团简介
-          </a>
-
-          <b class="arrow"></b>
-        </li>
-       {if condition="ACTION_NAME eq 'speak'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/speak')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-            总裁致辞
-          </a>
-
-          <b class="arrow"></b>
-        </li>
-        
-        {if condition="ACTION_NAME eq 'honor'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/honor')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-            资质荣誉
-          </a>
-
-          <b class="arrow"></b>
-        </li>
-        
-        {if condition="ACTION_NAME eq 'ideal'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/ideal')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-            集团理念
-          </a>
-          
-          {if condition="ACTION_NAME eq 'type'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/type')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-            组织分类
-          </a>
-          {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('About/lister')}">
-            <i class="menu-icon fa fa-caret-right"></i>
-            组织列表
-          </a>
-
-          <b class="arrow"></b>
-        </li>
-     
-      </ul>
-
-    </li>
-    
-       {if condition="CONTROLLER_NAME eq 'Cases'"}<li class="open">{else /}<li class="">{/if}
+       {if condition="CONTROLLER_NAME eq 'Goods'"}<li class="open">{else /}<li class="">{/if}
       <a href="#" class="dropdown-toggle">
         <i class="menu-icon fa fa-paper-plane"></i>
-        <span class="menu-text"> 产品中心 </span>
+        <span class="menu-text"> 商品管理 </span>
 
         <b class="arrow fa fa-angle-down"></b>
       </a>
@@ -217,24 +156,21 @@ $(function(){
 
       <ul class="submenu">
         {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('Cases/lister')}">
+          <a href="{:url('Goods/lister')}">
             <i class="menu-icon fa fa-caret-right"></i>
-            产品列表
+            商品列表
           </a>
 
           <b class="arrow"></b>
         </li>
      {if condition="ACTION_NAME eq 'type'"}<li class="active">{else /}<li class="">{/if}
-          <a href="{:url('Cases/type')}">
+          <a href="{:url('Goods/goods_type')}">
             <i class="menu-icon fa fa-caret-right"></i>
-            分类列表
+            商品分类
           </a>
 
           <b class="arrow"></b>
         </li>
-        
-
-
      
       </ul>
 
