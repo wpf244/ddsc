@@ -1,6 +1,8 @@
 <?php
 namespace app\admin\controller;
 
+use think\Db;
+
 class Sys extends BaseAdmin{
     function seting(){
         $re=db('sys')->where("id=1")->find();
@@ -59,7 +61,7 @@ class Sys extends BaseAdmin{
     function saves(){
         if($this->request->isAjax()){
             $data=input('post.');
-            $res=db('seo')->where("id=1")->update($data);
+            $res=Db::name('seo')->where("id=1")->update($data);
             if($res){
                 $this->success("修改成功！",url('Sys/seo'));
             }else{

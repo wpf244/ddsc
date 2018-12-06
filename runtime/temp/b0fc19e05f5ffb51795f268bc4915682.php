@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\index\index.html";i:1544068811;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\index\index.html";i:1544077238;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -520,7 +520,7 @@ $(function(){
                     <div class="infobox-data">
                       <span class="infobox-data-number">11</span>
                       <div class="infobox-content">新增会员（个）</div>
-                    </div>
+                    </div> 
                   </div>
 
                   <div class="infobox infobox-pink">
@@ -567,11 +567,8 @@ $(function(){
                       </div>
                     </div>
                   </div>
-
-
+                
                 </div>
-
-
 
                 <div class="col-sm-8">
                   <div class="widget-box widget-color-dark transparent">
