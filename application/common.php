@@ -37,3 +37,28 @@ function uploads($image){
 
     return $paths;
 }
+/**
+ * 检测目录读写权限
+ * @param unknown $dir_path
+ */
+function check_dir_iswritable($dir_path) {
+    // 目录路径
+	$dir_path = str_replace("\\", "/", $dir_path);
+	// 是否可写
+	$is_writale = 1;
+	// 判断是否是目录
+    if(!is_dir($dir_path)){ 
+		$is_writale=0; 
+		return $is_writale; 
+	}else{ 
+	    $fp = fopen("$dir_path/test.txt", 'w');
+        if($fp) {
+            fclose($fp);
+            unlink("$dir_path/test.txt");
+            $writeable = 1; 
+        } else {
+            $writeable = 0;
+        }
+	} 
+	return $is_writale;
+}

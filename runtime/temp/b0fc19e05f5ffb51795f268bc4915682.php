@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:72:"D:\www\12_03_ddsc\public/../application/admin\view\goods\goods_type.html";i:1543828087;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\index\index.html";i:1544068811;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -143,8 +143,8 @@
 </head>
 
 <body class="no-skin">
-<!--头部-->
-<div id="navbar" class="navbar navbar-default          ace-save-state">
+  <!--头部-->
+  <div id="navbar" class="navbar navbar-default          ace-save-state">
   <div class="navbar-container ace-save-state" id="navbar-container">
     <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
       <span class="sr-only">Toggle sidebar</span>
@@ -206,14 +206,13 @@
     </div>
   </div>
 </div>
+  <div class="main-container ace-save-state" id="main-container">
+    <!--菜单-->
+    <script type="text/javascript">
+      try { ace.settings.loadState('main-container') } catch (e) { }
+    </script>
 
-<div class="main-container ace-save-state" id="main-container">
-  <!--菜单-->
-  <script type="text/javascript">
-  try{ace.settings.loadState('main-container')}catch(e){}
-</script>
-
-<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+    <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
   <script type="text/javascript">
     try{ace.settings.loadState('sidebar')}catch(e){}
   </script>
@@ -403,23 +402,19 @@ $(function(){
     <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
   </div>
 </div>
+    <div class="main-content">
+      <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+          <ul class="breadcrumb">
+            <li>网站名称：<span><?php echo $sys['name']; ?></span></li>
+            <li>最后登录时间：<span><?php echo $admin['curtime']; ?></span></li>
+            <li>最后登录IP：<span><?php echo $admin['ip']; ?></span></li>
+          </ul>
 
-  <div class="main-content">
-    <div class="main-content-inner">
-      <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-        <ul class="breadcrumb">
-          <li>
-            <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="<?php echo url('Index/index'); ?>">首页</a>
-          </li>
-          <li class="active">商品分类</li>
-        </ul><!-- /.breadcrumb -->
+        </div>
 
-      </div>
-
-      <div class="page-content">
-
-         <div class="ace-settings-container" id="ace-settings-container">
+        <div class="page-content">
+           <div class="ace-settings-container" id="ace-settings-container">
   <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
     <i class="ace-icon fa fa-cog bigger-130"></i>
   </div>
@@ -487,111 +482,246 @@ $(function(){
 </div><!-- /.ace-settings-container -->
 
 
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="col-sm-10 col-sm-offset-1">
-              <div class="page-header">
-                <button class="btn btn-success btn-white btn-bold" data-toggle="modal" data-target="#add">
-                  <i class="ace-icon fa fa-plus icon-only"></i>
-                  添加
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- PAGE CONTENT BEGINS -->
+              <div class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="ace-icon fa fa-times"></i>
                 </button>
-               <button id="change" class="btn btn-warning btn-white btn-bold">
-                  <i class="fa fa-exchange"></i>
-                  排序
-                </button>
+
+                <i class="ace-icon fa fa-check green"></i>
+
+                欢迎使用
+                <strong class="green">
+                  <a href="http://www.dd371.com" target="_blank">朵朵科技</a>后台管理系统
+                  <small>(v1.1)</small>
+                </strong>,
+                轻量级好用的后台管理系统
               </div>
-              <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  
-                  <th>ID</th>
-                  <th class="hidden-480">排序</th>
-                  <th>分类名称</th>
-                  <th>分类图标</th>
-                  <th style="border-right:#ddd solid 1px;">操作</th>
-                </tr>
-                </thead>
-                <form id="sortForm" action="<?php echo url('Goods/goods_sort'); ?>" method="post">
-                <tbody>
-                <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
-                <tr>
-                 
-                  <td><span class="badge badge-grey"><?php echo $v['type_id']; ?></span></td>
-                  <td class="hidden-480"><input class="input-small" type="number" name="<?php echo $v['type_id']; ?>" value="<?php echo $v['type_sort']; ?>"></td>
-                  <td><?php echo $v['type_name']; ?></td>
-                   <td class="ace-thumbnails hidden-480">
-                    <li><a href="<?php echo $v['type_image']; ?>" data-rel="colorbox">
-                      <img width="80" height="80" alt="150x150" src="<?php echo $v['type_image']; ?>"/>
-                      <div class="text">
-                        <div class="inner">点击放大</div>
+
+              <div class="row">
+
+                <div class="col-xs-12">
+                  <div class="infobox infobox-green">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-cny"></i>
+                    </div>
+                    <div class="infobox-data">
+                      <span class="infobox-data-number">32</span>
+                      <div class="infobox-content">今日订单总金额（元）</div>
+                    </div>
+                  </div>
+
+                  <div class="infobox infobox-blue">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-twitter"></i>
+                    </div>
+                    <div class="infobox-data">
+                      <span class="infobox-data-number">11</span>
+                      <div class="infobox-content">新增会员（个）</div>
+                    </div>
+                  </div>
+
+                  <div class="infobox infobox-pink">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-shopping-cart"></i>
+                    </div>
+                    <div class="infobox-data">
+                      <span class="infobox-data-number">8</span>
+                      <div class="infobox-content">商品发布(个)</div>
+                    </div>
+                  </div>
+
+                  <div class="infobox infobox-red">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-flask"></i>
+                    </div>
+                    <div class="infobox-data">
+                      <span class="infobox-data-number">7</span>
+                      <div class="infobox-content">订单总数(笔)</div>
+                    </div>
+                  </div>
+
+                  <div class="infobox infobox-orange2">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-flask"></i>
+                    </div>
+                    <div class="infobox-data">
+                      <span class="infobox-data-number">6,251</span>
+                      <div class="infobox-content">本月销量(笔)</div>
+                    </div>
+
+                  </div>
+
+                  <div class="infobox infobox-blue2">
+                    <div class="infobox-icon">
+                      <i class="ace-icon fa fa-flask"></i>
+                    </div>
+
+                    <div class="infobox-data">
+                      <span class="infobox-text">0</span>
+                      <div class="infobox-content">
+                        <span class="bigger-110">已完成交易(笔)</span>
+
                       </div>
-                    </a></li>
-                  </td>
-                  <td>
-                    <button class="btn btn-xs btn-info" type="button" onclick="ajaxQuery('modify',<?php echo $v['type_id']; ?>,readData)">
-                      <i class="ace-icon fa fa-pencil bigger-120"></i>
-                    </button>
-                    <button class="btn btn-xs btn-danger" type="button" onclick="dels(<?php echo $v['type_id']; ?>)">
-                      <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                    </button>
-                  </td>
-                </tr>
-                <?php endforeach; endif; else: echo "" ;endif; if(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty())): ?><tr><td colspan="10" class="text-center">暂无数据</td></tr><?php endif; ?>
-                </tbody>
-                </form>
-              </table>
-              <div class="text-center">
-              </div>
-            </div>
-            <!-- PAGE CONTENT BEGINS -->
+                    </div>
+                  </div>
 
-            <!-- PAGE CONTENT ENDS -->
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.page-content -->
-    </div>
-  </div><!-- /.main-content -->
-  <!-- Modal -->
-  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-          aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加</h4>
-        </div>
-        <div class="modal-body">
-          <form id="modal-form" class="form-horizontal" action="<?php echo url('Goods/save_type'); ?>" method="post" enctype="multipart/form-data">
-            
-            <div class="form-group">
-              <label class="col-sm-2 control-label no-padding-right" for="">分类名称</label>
-              <div class="col-sm-8">
-                <input id="name" class="form-control" type="text" name="type_name" required>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-sm-2 control-label no-padding-right" for="">分类图标</label>
-              <div class="col-xs-8">
-                <input multiple="" type="file" id="pic" name="image" />
-                <img src="" id="image" class="img-responsive" />
-              </div>
-            </div>
-            
-            <input id="id" type="hidden">
-            
-             <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button  type="submit" class="btn btn-primary">保存</button>
-        </div>
-          </form>
-        </div>
-       
+
+                </div>
+
+
+
+                <div class="col-sm-8">
+                  <div class="widget-box widget-color-dark transparent">
+                    <div class="widget-header widget-header-flat">
+                      <h4 class="widget-title smaller">
+                        技术支持
+                      </h4>
+                    </div>
+
+                    <div class="widget-body">
+                      <div class="widget-main">
+                        <div class="alert alert-info">
+                          "创新"是朵朵的生存之本，"诚信"是朵朵的一贯宗旨。优质服务、塑造互联网领域的品牌是我们的 前进目标。在朵朵科技
+                          ，我们坚信，只有提供一流的服务，才能赢得用户长久的信任，热诚希望与您的合作能够成功!
+                          <br>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <blockquote class="pull-right">
+                              <p class="lighter line-height-125">优质服务、塑造互联网领域的品牌是我们的 前进目标。</p>
+
+                              <small>
+                                朵朵科技</small>
+                            </blockquote>
+                          </div>
+                        </div>
+
+                        <hr>
+                        <address>
+                          <strong>联系我们</strong>
+
+                          <br>
+                          郑州市金水区花园路国基路
+                          <br>
+                          恒华大厦806室
+                          <br>
+                          <i class="ace-icon fa fa-phone"></i>
+                          <a href="tel:0371-56776661">(0371) 56776661</a>
+                        </address>
+
+                        <address>
+                          <strong>E-mail</strong>
+
+                          <br>
+                          <a href="mailto:279585301@qq.com">279585301@qq.com</a>
+                        </address>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /.col -->
+
+                
+                <div class="col-xs-12 col-sm-6 widget-container-col ui-sortable" id="widget-container-col-2">
+                  <div class="widget-box widget-color-blue" id="widget-box-2">
+                    <div class="widget-header">
+                      <h5 class="widget-title bigger lighter">
+                        <i class="ace-icon fa fa-table"></i>
+                        服务器信息
+                      </h5>
+                     
+                    </div>
+                    <div class="widget-body">
+                      <div class="widget-main no-padding">
+                        <table class="table table-striped table-bordered table-hover">
+                         
+                          <tbody>
+                            <tr>
+                              <td class="">服务器操作系统</td>
+                              <td>
+                                <a href="javascipr:;"><?php echo $system_config['os']; ?></a>
+                              </td>
+                           
+                            </tr>
+                            <tr>
+                              <td class="">服务器域名</td>
+                              <td>
+                                <a href="javascipr:;"><?php echo $system_config['dns']; ?>:<?php echo $system_config['port']; ?></a>
+                              </td>
+                            
+                            </tr>
+                         
+                            <tr>
+                              <td class="">服务器环境</td>
+                              <td>
+                                <a href="javascipr:;"><?php echo $system_config['server_software']; ?></a>
+                              </td>
+                            
+                            </tr>
+                            <tr>
+                              <td class="">PHP版本</td>
+                              <td>
+                                <a href="javascipr:;"><?php echo $system_config['php_version']; ?></a>
+                              </td>
+                            
+                            </tr>
+                            <tr>
+                              <td class="">文件上传限制</td>
+                              <td>
+                                <a href="javascipr:;"><?php echo $system_config['upload_max_filesize']; ?></a>
+                              </td>
+                            
+                            </tr>
+                            <tr>
+                              <td class="">curl支持</td>
+                              <td>
+                                <a href="javascipr:;"><?php if($system_config['curl'] == true): ?>支持<?php else: ?><span style="color:red;">不支持，微信和支付宝等功能将无法正常使用</span><?php endif; ?></a>
+                              </td>
+                            
+                            </tr>
+
+                            <tr>
+                              <td class="">openssl支持</td>
+                              <td>
+                                <a href="javascipr:;"><?php if($system_config['openssl'] == true): ?>已开启<?php else: ?><span style="color:red;">未开启，不支持https</span><?php endif; ?></a>
+                              </td>
+                            
+                            </tr>
+                            <tr>
+                              <td class="">uploads目录权限</td>
+                              <td>
+                                <a href="javascipr:;"><?php if($system_config['upload_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成图片无法上传和访问</span><?php endif; ?></a>
+                              </td>
+                            
+                            </tr>
+                            <tr>
+                              <td class="">runtime目录权限</td>
+                              <td>
+                                <a href="javascipr:;"><?php if($system_config['runtime_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成编译文件缓存文件无法生成读取，是网站访问出错</span><?php endif; ?></a>
+                              </td>
+                            
+                            </tr>
+
+                         
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div><!-- /.row -->
+              <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.page-content -->
       </div>
-    </div>
-  </div>
+    </div><!-- /.main-content -->
 
-  <div class="footer">
+      <div class="footer">
   <div class="footer-inner">
     <div class="footer-content">
 						<span class="bigger-110">
@@ -618,159 +748,27 @@ $(function(){
   </div>
 </div>
 
-<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-  <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-</a>
-</div><!-- /.main-container -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+      <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+  </div><!-- /.main-container -->
 
 
-<script>
-  jQuery(function($) {
-    $('[data-rel=tooltip]').tooltip();
-
-    $( "#hide-option" ).tooltip({
-      hide: {
-        effect: "explode",
-        delay: 250
-      }
-    });
-
-  })
-</script>
-<script>
-$(function(){
-	$('#modal-form').ajaxForm({
-		beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
-		success: complete, // 这是提交后的方法
-		dataType: 'json'
-	});
-	
-	function checkForm(){
-	  
-		
-    }
-
-	function complete(data){
-		if(data.status==1){
-			layer.alert(data.msg, {icon: 5}, function(index){
- 			layer.close(index);
- 			window.location.href=data.url;
-			});
-			
-		}else{
-			layer.alert(data.msg, {icon: 6}, function(index){
- 			layer.close(index);
- 			window.location.href=data.url;
-			});
-			
-		}
-	}
- 
-});
-
-</script>
-<script type="text/javascript">
-		function dels(id){
-			layer.confirm('你确定删除分类及分类下的产品吗', {icon: 3}, function(index){
-		    layer.close(index);
-		    window.location.href="/admin/goods/delete_type/id/"+id;
-		  });
-	    }
-		</script>
 
   <script>
-    /* $(function () {
-      //添加-模态框
-      $("#save-btn").on(ace.click_event, function () {
-        //获取form表单,执行ajaxSubmit提交
-    	  var name = $("#name").val();
-    	  if($.trim(name) == ''){
-        	  layer.alert("请输入分类名称！",{icon:5});
-        	  return false;
-          }
-    	var id = $("#id").val();
-        $("#add").ajaxSubmit({
-          url: '/admin/goods/save_type',
-          type: 'post',
-          data:{name:name,id:id},
-          datatype:"text",
-          success: function(res){
-            //后台返回状态,保存成功
-            if(res.code == 1){
-              success(res.msg);
-              location.href=res.url;
-            }else{
-              error(res.msg);
-              location.href=res.url;
-            }
-          }
-        })
-      })
-    }); */
+    jQuery(function ($) {
+      $('[data-rel=tooltip]').tooltip();
 
-    $(function () {
-      $('#pic').ace_file_input({
-        style: 'well',
-        btn_choose: '图片',
-        btn_change: null,
-        no_icon: 'ace-icon fa fa-picture-o',
-        droppable: true,
-        thumbnail: 'fit'//large | fit
-        //,icon_remove:null//set null, to hide remove/reset button
-        /**,before_change:function(files, dropped) {
-						//Check an example below
-						//or examples/file-upload.html
-						return true;
-					}*/
-        /**,before_remove : function() {
-						return true;
-					}*/
-        ,
-        preview_error: function (filename, error_code) {
-          //name of the file that failed
-          //error_code values
-          //1 = 'FILE_LOAD_FAILED',
-          //2 = 'IMAGE_LOAD_FAILED',
-          //3 = 'THUMBNAIL_FAILED'
-          //alert(error_code);
+      $("#hide-option").tooltip({
+        hide: {
+          effect: "explode",
+          delay: 250
         }
-
-      }).on('change', function (e) {
-    	  console.log(e.target.value)
-        //console.log($(this).data('ace_input_files'));
-        //console.log($(this).data('ace_input_method'));
       });
 
-     
-    });
-
-    //向模态框写入数据
-    function readData(data) {
-      $(".modal-title").text('修改');
-      $("#id").val(data.type_id);
-      $("#name").val(data.type_name);
-  
-      $("#image").attr('src',data.type_image);
-      $('#add').modal('show');
-    }
-
-    function gs() {
-      console.log(1)
-    }
-    $("#change").click(function(){
-    	$("#sortForm").submit();
     })
-    
-    
-    //bs模态框关闭事件回调函数
-    $('#add').on('hidden.bs.modal', function (e) {
-  // do something...
-  $('#modal-form').get(0).reset();
-  $(".modal-title").text('添加');
-  $("#desc").text('');
-  $("#image").attr('src','');
-	})
   </script>
 
 </body>
+
 </html>
