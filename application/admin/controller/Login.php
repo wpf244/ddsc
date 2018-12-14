@@ -20,20 +20,25 @@ class Login extends Common
         return view('index');
     }
     public function check(){
+       // $data = input('post.');
+        if(!captcha_check(input('post.verify'))) {
+            // 校验失败
+            $this->error('验证码不正确');exit;
+        }
         $unm=input('post.username');
-        $pwd=input('post.password');
+        $pwd=md5(input('post.password'));
         $re=db("Admin")->where(array('username'=>$unm,'pwd'=>$pwd))->find();
         if($re){
-            session('uid',$re['Id']);
+            session('uid',$re['id']);
             \session('username',$re['username']);
             $time = date('Y-m-d H:i:s',time());
-            $re_pre = db("Admin")->where("Id=1")->find();
+            $re_pre = db("Admin")->where("id=1")->find();
             $pretime = $re_pre['curtime'];
             $ip=Request::instance()->ip();
             $data['pretime']=$pretime;
             $data['curtime']=$time;
             $data['ip']=$ip;
-            $res = db("Admin")->where("Id=1")->update($data);
+            $res = db("Admin")->where("id=1")->update($data);
             
             //增加操作日志
             $arr=array();
@@ -59,18 +64,31 @@ class Login extends Common
         if (! defined('ACTION_NAME')) {
             define('ACTION_NAME', $this->request->action());
         }
-        $re=db("Admin")->where("id=1")->find();
+        $id=\session('uid');
+        $re=db("Admin")->where("id=$id")->find();
         $this->assign("re",$re);
         return view('modify');
     }
     function save(){
         $ob=db("Admin");
-        $data=input('post.');
-        $res=$ob->where("Id=1")->update($data);
-        if($res){
-            $this->success("修改成功！");
+        $old_pwd=md5(input('old_pwd'));
+        $id=input('id');
+        $re=$ob->where("id=$id and pwd='$old_pwd'")->find();
+        if($re){
+            $data['pwd']=md5(input('pwd'));
+            $res=$ob->where("id=$id")->update($data);
+            if($res){
+                $this->success("修改成功！");
+            }else{
+                $this->error("修改失败！");
+            }
         }else{
-            $this->error("修改失败！");
+            $this->error("原密码错误！");
         }
+
+        
     }
+ 
+
+
 }

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:68:"D:\www\12_03_ddsc\public/../application/admin\view\shops\lister.html";i:1543807534;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543821766;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:68:"D:\www\12_03_ddsc\public/../application/admin\view\shops\lister.html";i:1543807534;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1544085067;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1544515875;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 <![endif]-->
 <link rel="stylesheet" href="/static/admin/css/style.min.css">
+<link rel="stylesheet" href="/static/admin/css/input.css">
 
 <!-- inline styles related to this page -->
  <!-- <link rel="stylesheet" href="/static/admin/layui/css/layui.css"  media="all"> -->
@@ -55,7 +56,8 @@
 
 <!--[if !IE]> -->
 <script src="/static/admin/assets/js/jquery-2.1.4.min.js"></script>
-
+<script src="/static/admin/js/input.js"></script>
+<script src="/static/admin/js/zh.js"></script>
 
 <!-- <![endif]-->
 
@@ -390,47 +392,11 @@ $(function(){
       </ul>
 
     </li>
-    
-     <?php if(CONTROLLER_NAME == 'News'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
-    <a href="#" class="dropdown-toggle">
-      <i class="menu-icon fa fa-share"></i>
-      <span class="menu-text"> 新闻中心 </span>
 
-      <b class="arrow fa fa-angle-down"></b>
-    </a>
-
-    <b class="arrow"></b>
-
-    <ul class="submenu">
-      <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-      <a href="<?php echo url('News/lister'); ?>">
-        <i class="menu-icon fa fa-caret-right"></i>
-        新闻列表
-      </a>
-
-      <b class="arrow"></b>
-    </li>
-    
-    <?php if(ACTION_NAME == 'type'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-      <a href="<?php echo url('News/type'); ?>">
-        <i class="menu-icon fa fa-caret-right"></i>
-       分类列表
-      </a>
-
-      <b class="arrow"></b>
-    </li>
- 
-
-
-    </ul>
-
-  </li>
-    
-    
-    <?php if(CONTROLLER_NAME == 'Culture'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+    <?php if(CONTROLLER_NAME == 'Carte'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
       <a href="#" class="dropdown-toggle">
-        <i class="menu-icon fa fa-paper-plane"></i>
-        <span class="menu-text"> 集团文化 </span>
+        <i class="menu-icon fa fa-reorder"></i>
+        <span class="menu-text"> 菜单管理 </span>
 
         <b class="arrow fa fa-angle-down"></b>
       </a>
@@ -438,103 +404,21 @@ $(function(){
       <b class="arrow"></b>
 
       <ul class="submenu">
-        <?php if(ACTION_NAME == 'index'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Culture/index'); ?>">
+        <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
+          <a href="<?php echo url('Carte/lister'); ?>">
             <i class="menu-icon fa fa-caret-right"></i>
-            文化建设
+            后台模块
           </a>
 
           <b class="arrow"></b>
         </li>
-    <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Culture/lister'); ?>">
-            <i class="menu-icon fa fa-caret-right"></i>
-            文化沙龙
-          </a>
-
-          <b class="arrow"></b>
-        </li>
- 
+    
      
       </ul>
 
     </li>
     
-     <?php if(CONTROLLER_NAME == 'Job'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
-    <a href="#" class="dropdown-toggle">
-      <i class="menu-icon fa fa-user"></i>
-      <span class="menu-text"> 在线招聘 </span>
-
-      <b class="arrow fa fa-angle-down"></b>
-    </a>
-
-    <b class="arrow"></b>
-
-    <ul class="submenu">
-      <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-      <a href="<?php echo url('Job/lister'); ?>">
-        <i class="menu-icon fa fa-caret-right"></i>
-        招聘列表
-      </a>
-
-      <b class="arrow"></b>
-    </li>
-
-    </ul>
-
-  </li>
-    
-     <?php if(CONTROLLER_NAME == 'Team'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
-    <a href="#" class="dropdown-toggle">
-      <i class="menu-icon fa fa-heart"></i>
-      <span class="menu-text"> 团队展示 </span>
-
-      <b class="arrow fa fa-angle-down"></b>
-    </a>
-
-    <b class="arrow"></b>
-
-    <ul class="submenu">
-      <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-      <a href="<?php echo url('Team/lister'); ?>">
-        <i class="menu-icon fa fa-caret-right"></i>
-        团队列表
-      </a>
-
-      <b class="arrow"></b>
-    </li>
-
-    </ul>
-
-  </li>
-
-
-
-<?php if(CONTROLLER_NAME == 'Message'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
-    <a href="#" class="dropdown-toggle">
-      <i class="menu-icon fa fa-bullhorn"></i>
-      <span class="menu-text"> 留言列表 </span>
-
-      <b class="arrow fa fa-angle-down"></b>
-    </a>
-
-    <b class="arrow"></b>
-
-    <ul class="submenu">
-    <?php if(ACTION_NAME == 'index'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-      <a href="<?php echo url('Message/index'); ?>">
-        <i class="menu-icon fa fa-caret-right"></i>
-        留言列表
-      </a>
-
-      <b class="arrow"></b>
-    </li>
-  
-    
-
-    </ul>
-
-  </li>
+     
   
   
 

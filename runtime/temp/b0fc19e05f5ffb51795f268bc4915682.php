@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\index\index.html";i:1544077238;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\index\index.html";i:1544509014;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1544085067;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1544670797;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1544670709;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 <![endif]-->
 <link rel="stylesheet" href="/static/admin/css/style.min.css">
+<link rel="stylesheet" href="/static/admin/css/input.css">
 
 <!-- inline styles related to this page -->
  <!-- <link rel="stylesheet" href="/static/admin/layui/css/layui.css"  media="all"> -->
@@ -55,7 +56,8 @@
 
 <!--[if !IE]> -->
 <script src="/static/admin/assets/js/jquery-2.1.4.min.js"></script>
-
+<script src="/static/admin/js/input.js"></script>
+<script src="/static/admin/js/zh.js"></script>
 
 <!-- <![endif]-->
 
@@ -173,7 +175,7 @@
             <img class="nav-user-photo" src="/static/admin/assets/images/avatars/user.png" alt="Jason's Photo" />
             <span class="user-info">
 									<small>欢迎登录</small>
-									Admin
+									<?php echo $admin['username']; ?>
 								</span>
 
             <i class="ace-icon fa fa-caret-down"></i>
@@ -268,38 +270,30 @@ $(function(){
 
       <b class="arrow"></b>
     </li>
-
-    <?php if(CONTROLLER_NAME == 'Sys'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+ <?php if(is_array($controls) || $controls instanceof \think\Collection || $controls instanceof \think\Paginator): $i = 0; $__LIST__ = $controls;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$c): $mod = ($i % 2 );++$i;if(CONTROLLER_NAME == $c['c_modul']): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
       <a href="#" class="dropdown-toggle">
-        <i class="menu-icon fa fa-desktop"></i>
-        <span class="menu-text"> 网站设置 </span>
+        <i class="menu-icon fa <?php echo $c['c_icon']; ?>"></i>
+        <span class="menu-text"> <?php echo $c['c_name']; ?> </span>
 
         <b class="arrow fa fa-angle-down"></b>
       </a>
 
       <b class="arrow"></b>
       <ul class="submenu">
-        <?php if(ACTION_NAME == 'seting'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Sys/seting'); ?>">
+       <?php if(is_array($c['ways']) || $c['ways'] instanceof \think\Collection || $c['ways'] instanceof \think\Paginator): $i = 0; $__LIST__ = $c['ways'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$w): $mod = ($i % 2 );++$i;if(ACTION_NAME == $w['c_modul']): ?><li class="active"><?php else: ?><li class=""><?php endif;  $url = $c['c_modul'].'/'.$w['c_modul']; ?>
+          <a href="<?php echo url($url); ?>">
             <i class="menu-icon fa fa-caret-right"></i>
-            基本信息
+            <?php echo $w['c_name']; ?>
           </a>
 
           <b class="arrow"></b>
         </li>
-
-        <?php if(ACTION_NAME == 'seo'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Sys/seo'); ?>">
-            <i class="menu-icon fa fa-caret-right"></i>
-            网站优化
-          </a>
-
-          <b class="arrow"></b>
-        </li>
+      <?php endforeach; endif; else: echo "" ;endif; ?>
+       
       </ul>
     </li>
-
-    <?php if(CONTROLLER_NAME == 'Lb'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+<?php endforeach; endif; else: echo "" ;endif; ?>
+    <!-- <?php if(CONTROLLER_NAME == 'Lb'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
       <a href="#" class="dropdown-toggle">
         <i class="menu-icon fa fa-picture-o"></i>
         <span class="menu-text"> 广告图管理 </span>
@@ -389,8 +383,56 @@ $(function(){
       </ul>
 
     </li>
+
+    <?php if(CONTROLLER_NAME == 'Carte'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-reorder"></i>
+        <span class="menu-text"> 菜单管理 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
+          <a href="<?php echo url('Carte/lister'); ?>">
+            <i class="menu-icon fa fa-caret-right"></i>
+            后台模块
+          </a>
+
+          <b class="arrow"></b>
+        </li>
     
      
+      </ul>
+
+    </li>
+    
+    <?php if(CONTROLLER_NAME == 'User'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+        <a href="#" class="dropdown-toggle">
+          <i class="menu-icon fa fa-reorder"></i>
+          <span class="menu-text"> 管理员管理 </span>
+  
+          <b class="arrow fa fa-angle-down"></b>
+        </a>
+  
+        <b class="arrow"></b>
+  
+        <ul class="submenu">
+          <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
+            <a href="<?php echo url('User/lister'); ?>">
+              <i class="menu-icon fa fa-caret-right"></i>
+              管理员列表
+            </a>
+  
+            <b class="arrow"></b>
+          </li>
+      
+       
+        </ul>
+  
+      </li> -->
   
   
 
@@ -638,14 +680,14 @@ $(function(){
                             <tr>
                               <td class="">服务器操作系统</td>
                               <td>
-                                <a href="javascipr:;"><?php echo $system_config['os']; ?></a>
+                                <a href="javascript:;"><?php echo $system_config['os']; ?></a>
                               </td>
                            
                             </tr>
                             <tr>
                               <td class="">服务器域名</td>
                               <td>
-                                <a href="javascipr:;"><?php echo $system_config['dns']; ?>:<?php echo $system_config['port']; ?></a>
+                                <a href="javascript:;"><?php echo $system_config['dns']; ?>:<?php echo $system_config['port']; ?></a>
                               </td>
                             
                             </tr>
@@ -653,28 +695,28 @@ $(function(){
                             <tr>
                               <td class="">服务器环境</td>
                               <td>
-                                <a href="javascipr:;"><?php echo $system_config['server_software']; ?></a>
+                                <a href="javascript:;"><?php echo $system_config['server_software']; ?></a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">PHP版本</td>
                               <td>
-                                <a href="javascipr:;"><?php echo $system_config['php_version']; ?></a>
+                                <a href="javascript:;"><?php echo $system_config['php_version']; ?></a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">文件上传限制</td>
                               <td>
-                                <a href="javascipr:;"><?php echo $system_config['upload_max_filesize']; ?></a>
+                                <a href="javascript:;"><?php echo $system_config['upload_max_filesize']; ?></a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">curl支持</td>
                               <td>
-                                <a href="javascipr:;"><?php if($system_config['curl'] == true): ?>支持<?php else: ?><span style="color:red;">不支持，微信和支付宝等功能将无法正常使用</span><?php endif; ?></a>
+                                <a href="javascript:;"><?php if($system_config['curl'] == true): ?>支持<?php else: ?><span style="color:red;">不支持，微信和支付宝等功能将无法正常使用</span><?php endif; ?></a>
                               </td>
                             
                             </tr>
@@ -682,21 +724,21 @@ $(function(){
                             <tr>
                               <td class="">openssl支持</td>
                               <td>
-                                <a href="javascipr:;"><?php if($system_config['openssl'] == true): ?>已开启<?php else: ?><span style="color:red;">未开启，不支持https</span><?php endif; ?></a>
+                                <a href="javascript:;"><?php if($system_config['openssl'] == true): ?>已开启<?php else: ?><span style="color:red;">未开启，不支持https</span><?php endif; ?></a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">uploads目录权限</td>
                               <td>
-                                <a href="javascipr:;"><?php if($system_config['upload_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成图片无法上传和访问</span><?php endif; ?></a>
+                                <a href="javascript:;"><?php if($system_config['upload_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成图片无法上传和访问</span><?php endif; ?></a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">runtime目录权限</td>
                               <td>
-                                <a href="javascipr:;"><?php if($system_config['runtime_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成编译文件缓存文件无法生成读取，是网站访问出错</span><?php endif; ?></a>
+                                <a href="javascript:;"><?php if($system_config['runtime_dir_jurisdiction'] == 1): ?>可读可写<?php else: ?><span style="color:red;">不可读不可写，会造成编译文件缓存文件无法生成读取，是网站访问出错</span><?php endif; ?></a>
                               </td>
                             
                             </tr>

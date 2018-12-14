@@ -182,14 +182,14 @@
                             <tr>
                               <td class="">服务器操作系统</td>
                               <td>
-                                <a href="javascipr:;">{$system_config['os']}</a>
+                                <a href="javascript:;">{$system_config['os']}</a>
                               </td>
                            
                             </tr>
                             <tr>
                               <td class="">服务器域名</td>
                               <td>
-                                <a href="javascipr:;">{$system_config['dns']}:{$system_config['port']}</a>
+                                <a href="javascript:;">{$system_config['dns']}:{$system_config['port']}</a>
                               </td>
                             
                             </tr>
@@ -197,28 +197,28 @@
                             <tr>
                               <td class="">服务器环境</td>
                               <td>
-                                <a href="javascipr:;">{$system_config['server_software']}</a>
+                                <a href="javascript:;">{$system_config['server_software']}</a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">PHP版本</td>
                               <td>
-                                <a href="javascipr:;">{$system_config['php_version']}</a>
+                                <a href="javascript:;">{$system_config['php_version']}</a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">文件上传限制</td>
                               <td>
-                                <a href="javascipr:;">{$system_config['upload_max_filesize']}</a>
+                                <a href="javascript:;">{$system_config['upload_max_filesize']}</a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">curl支持</td>
                               <td>
-                                <a href="javascipr:;">{if condition="$system_config['curl'] eq true"}支持{else/}<span style="color:red;">不支持，微信和支付宝等功能将无法正常使用</span>{/if}</a>
+                                <a href="javascript:;">{if condition="$system_config['curl'] eq true"}支持{else/}<span style="color:red;">不支持，微信和支付宝等功能将无法正常使用</span>{/if}</a>
                               </td>
                             
                             </tr>
@@ -226,21 +226,21 @@
                             <tr>
                               <td class="">openssl支持</td>
                               <td>
-                                <a href="javascipr:;">{if condition="$system_config['openssl'] eq true"}已开启{else/}<span style="color:red;">未开启，不支持https</span>{/if}</a>
+                                <a href="javascript:;">{if condition="$system_config['openssl'] eq true"}已开启{else/}<span style="color:red;">未开启，不支持https</span>{/if}</a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">uploads目录权限</td>
                               <td>
-                                <a href="javascipr:;">{if condition="$system_config['upload_dir_jurisdiction'] eq 1"}可读可写{else/}<span style="color:red;">不可读不可写，会造成图片无法上传和访问</span>{/if}</a>
+                                <a href="javascript:;">{if condition="$system_config['upload_dir_jurisdiction'] eq 1"}可读可写{else/}<span style="color:red;">不可读不可写，会造成图片无法上传和访问</span>{/if}</a>
                               </td>
                             
                             </tr>
                             <tr>
                               <td class="">runtime目录权限</td>
                               <td>
-                                <a href="javascipr:;">{if condition="$system_config['runtime_dir_jurisdiction'] eq 1"}可读可写{else/}<span style="color:red;">不可读不可写，会造成编译文件缓存文件无法生成读取，是网站访问出错</span>{/if}</a>
+                                <a href="javascript:;">{if condition="$system_config['runtime_dir_jurisdiction'] eq 1"}可读可写{else/}<span style="color:red;">不可读不可写，会造成编译文件缓存文件无法生成读取，是网站访问出错</span>{/if}</a>
                               </td>
                             
                             </tr>

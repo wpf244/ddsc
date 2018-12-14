@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:72:"D:\www\12_03_ddsc\public/../application/admin\view\goods\goods_type.html";i:1543828087;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1534735680;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1543885361;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:72:"D:\www\12_03_ddsc\public/../application/admin\view\goods\goods_type.html";i:1544435023;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1544085067;s:56:"D:\www\12_03_ddsc\application\admin\view\public\nav.html";i:1544670797;s:57:"D:\www\12_03_ddsc\application\admin\view\public\left.html";i:1544670709;s:56:"D:\www\12_03_ddsc\application\admin\view\public\set.html";i:1531125003;s:59:"D:\www\12_03_ddsc\application\admin\view\public\footer.html";i:1535074403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 <![endif]-->
 <link rel="stylesheet" href="/static/admin/css/style.min.css">
+<link rel="stylesheet" href="/static/admin/css/input.css">
 
 <!-- inline styles related to this page -->
  <!-- <link rel="stylesheet" href="/static/admin/layui/css/layui.css"  media="all"> -->
@@ -55,7 +56,8 @@
 
 <!--[if !IE]> -->
 <script src="/static/admin/assets/js/jquery-2.1.4.min.js"></script>
-
+<script src="/static/admin/js/input.js"></script>
+<script src="/static/admin/js/zh.js"></script>
 
 <!-- <![endif]-->
 
@@ -141,7 +143,21 @@
     #Validform_msg .Validform_info{padding:8px;border:1px solid #000; border-top:none; text-align:left;}
   </style>
 </head>
-
+<style>
+.addRow,.open{
+  cursor: pointer;
+}
+</style>
+<style>
+ 
+.add-child i{
+	font-style: normal;
+	display: none;
+}
+.add-child:hover i{
+	display: inline-block;
+}
+    </style>
 <body class="no-skin">
 <!--头部-->
 <div id="navbar" class="navbar navbar-default          ace-save-state">
@@ -173,7 +189,7 @@
             <img class="nav-user-photo" src="/static/admin/assets/images/avatars/user.png" alt="Jason's Photo" />
             <span class="user-info">
 									<small>欢迎登录</small>
-									Admin
+									<?php echo $admin['username']; ?>
 								</span>
 
             <i class="ace-icon fa fa-caret-down"></i>
@@ -269,38 +285,30 @@ $(function(){
 
       <b class="arrow"></b>
     </li>
-
-    <?php if(CONTROLLER_NAME == 'Sys'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+ <?php if(is_array($controls) || $controls instanceof \think\Collection || $controls instanceof \think\Paginator): $i = 0; $__LIST__ = $controls;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$c): $mod = ($i % 2 );++$i;if(CONTROLLER_NAME == $c['c_modul']): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
       <a href="#" class="dropdown-toggle">
-        <i class="menu-icon fa fa-desktop"></i>
-        <span class="menu-text"> 网站设置 </span>
+        <i class="menu-icon fa <?php echo $c['c_icon']; ?>"></i>
+        <span class="menu-text"> <?php echo $c['c_name']; ?> </span>
 
         <b class="arrow fa fa-angle-down"></b>
       </a>
 
       <b class="arrow"></b>
       <ul class="submenu">
-        <?php if(ACTION_NAME == 'seting'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Sys/seting'); ?>">
+       <?php if(is_array($c['ways']) || $c['ways'] instanceof \think\Collection || $c['ways'] instanceof \think\Paginator): $i = 0; $__LIST__ = $c['ways'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$w): $mod = ($i % 2 );++$i;if(ACTION_NAME == $w['c_modul']): ?><li class="active"><?php else: ?><li class=""><?php endif;  $url = $c['c_modul'].'/'.$w['c_modul']; ?>
+          <a href="<?php echo url($url); ?>">
             <i class="menu-icon fa fa-caret-right"></i>
-            基本信息
+            <?php echo $w['c_name']; ?>
           </a>
 
           <b class="arrow"></b>
         </li>
-
-        <?php if(ACTION_NAME == 'seo'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
-          <a href="<?php echo url('Sys/seo'); ?>">
-            <i class="menu-icon fa fa-caret-right"></i>
-            网站优化
-          </a>
-
-          <b class="arrow"></b>
-        </li>
+      <?php endforeach; endif; else: echo "" ;endif; ?>
+       
       </ul>
     </li>
-
-    <?php if(CONTROLLER_NAME == 'Lb'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+<?php endforeach; endif; else: echo "" ;endif; ?>
+    <!-- <?php if(CONTROLLER_NAME == 'Lb'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
       <a href="#" class="dropdown-toggle">
         <i class="menu-icon fa fa-picture-o"></i>
         <span class="menu-text"> 广告图管理 </span>
@@ -390,8 +398,56 @@ $(function(){
       </ul>
 
     </li>
+
+    <?php if(CONTROLLER_NAME == 'Carte'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-reorder"></i>
+        <span class="menu-text"> 菜单管理 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
+          <a href="<?php echo url('Carte/lister'); ?>">
+            <i class="menu-icon fa fa-caret-right"></i>
+            后台模块
+          </a>
+
+          <b class="arrow"></b>
+        </li>
     
      
+      </ul>
+
+    </li>
+    
+    <?php if(CONTROLLER_NAME == 'User'): ?><li class="open"><?php else: ?><li class=""><?php endif; ?>
+        <a href="#" class="dropdown-toggle">
+          <i class="menu-icon fa fa-reorder"></i>
+          <span class="menu-text"> 管理员管理 </span>
+  
+          <b class="arrow fa fa-angle-down"></b>
+        </a>
+  
+        <b class="arrow"></b>
+  
+        <ul class="submenu">
+          <?php if(ACTION_NAME == 'lister'): ?><li class="active"><?php else: ?><li class=""><?php endif; ?>
+            <a href="<?php echo url('User/lister'); ?>">
+              <i class="menu-icon fa fa-caret-right"></i>
+              管理员列表
+            </a>
+  
+            <b class="arrow"></b>
+          </li>
+      
+       
+        </ul>
+  
+      </li> -->
   
   
 
@@ -491,54 +547,116 @@ $(function(){
           <div class="col-xs-12">
             <div class="col-sm-10 col-sm-offset-1">
               <div class="page-header">
-                <button class="btn btn-success btn-white btn-bold" data-toggle="modal" data-target="#add">
+                <a class="btn btn-success btn-white btn-bold" href="<?php echo url('Goods/add_type'); ?>">
                   <i class="ace-icon fa fa-plus icon-only"></i>
                   添加
-                </button>
+                </a>
                <button id="change" class="btn btn-warning btn-white btn-bold">
                   <i class="fa fa-exchange"></i>
                   排序
                 </button>
+                <button id="save" class="btn btn-info btn-white btn-bold hidden">
+                  <i class="fa fa-save"></i>
+                  保存
+                </button>
               </div>
               <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
+                  <thead>
+                      <tr align="center">
+                        <th></th>
+                        <th align="left">分类名称</th>
+                        <!-- <th align="left">商品分类简称</th>
+                        <th align="left">关联类型</th> -->
+                        <th>是否显示</th>
+                        <th>排序</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php if(is_array($list_one) || $list_one instanceof \think\Collection || $list_one instanceof \think\Paginator): if( count($list_one)==0 ) : echo "" ;else: foreach($list_one as $key=>$v1): ?>
+                      <tr class="pid_0" style="height: 30px;" data-category-id="<?php echo $v1['type_id']; ?>" data-pid="<?php echo $v1['pid']; ?>" data-level="<?php echo $v1['level']; ?>">
+                        <td>
+                          <?php if($v1['list_two'] != array()): ?>
+                          <a href="javascript:;" onclick="tab_switch(<?php echo $v1['type_id']; ?>)" class="tab_jia_<?php echo $v1['type_id']; ?>" style="display: block;">[+]</a>
+                          <a href="javascript:;" onclick="tab_switch(<?php echo $v1['type_id']; ?>)" class="tab_jian_<?php echo $v1['type_id']; ?>" style="display: none;">[-]</a>
+                          <?php endif; ?>
+                        </td>
+                        
+                        <td>
+                          <input class="input-common middle" type="text" fieldid="<?php echo $v1['type_id']; ?>" fieldname="type_name" value="<?php echo $v1['type_name']; ?>" style="width: 150px;">
+                          <a href="javascript:;" onclick="addChildGoodsCategory(this, 2, <?php echo $v1['type_id']; ?>);">
+                          <span class="add-child"><span class="badge badge-danger addRow">+</span><i>添加子分类</i></span>
+                          </a>
+                        </td>
+                        <!-- <td><input class="input-common middle" type="text" fieldid="<?php echo $v1['type_id']; ?>" fieldname="short_name" value="<?php echo $v1['type_name']; ?>" style="width: 150px;"></td>
+                        <td><?php echo $v1['type_name']; ?></td> -->
+                        <td style="text-align: center;"><?php if($v1['status'] == 1): ?>是 <?php else: ?>否<?php endif; ?></td>
+                        <td style="text-align: center;"><input type="number" class="sort input-common input-common-sort" fieldid="<?php echo $v1['type_id']; ?>" fieldname="type_sort" value="<?php echo $v1['type_sort']; ?>" size="1"></td>
+                        <td style="text-align: center;">
+                            <a class="btn btn-xs btn-info" href="<?php echo url('Goods/modifys',array('type_id'=>$v1['type_id'])); ?>">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                            </a>
+                            <button class="btn btn-xs btn-danger" type="button" onclick="dels(<?php echo $v1['type_id']; ?>)">
+                              <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                        </td>
+                      </tr>
+                      
+                        <?php if(is_array($v1['list_two']) || $v1['list_two'] instanceof \think\Collection || $v1['list_two'] instanceof \think\Paginator): if( count($v1['list_two'])==0 ) : echo "" ;else: foreach($v1['list_two'] as $key=>$v2): ?>
+                        <tr class="pid_<?php echo $v1['type_id']; ?>" style="height: 30px;display:none;" data-category-id="<?php echo $v2['type_id']; ?>" data-pid="<?php echo $v2['pid']; ?>" data-level="<?php echo $v2['level']; ?>">
+                          <td>
+                            <?php if($v2['list_three'] != array()): ?>
+                            <a href="javascript:;" onclick="tab_switch(<?php echo $v2['type_id']; ?>)" class="tab_jian_<?php echo $v2['type_id']; ?>" style="display: block;">[-]</a>
+                            <a href="javascript:;" onclick="tab_switch(<?php echo $v2['type_id']; ?>)" class="tab_jia_<?php echo $v2['type_id']; ?>" style="display: none;">[+]</a>
+                            <?php endif; ?>
+                          </td>
+                          
+                          <td><span style="color:#ccc;">|——</span> <input type="text" class="input-common middle" fieldid="<?php echo $v2['type_id']; ?>" fieldname="type_name" value="<?php echo $v2['type_name']; ?>" style="width: 150px;">
+                            <a href="javascript:;" onclick="addChildGoodsCategory(this, 3, <?php echo $v2['type_id']; ?>);">
+                              <span class="add-child"><span class="badge badge-danger addRow">+</span><i>添加子分类</i></span>
+                            </a>
+                          </td>
+                          <!-- <td><input type="text" class="input-common middle" fieldid="<?php echo $v2['type_id']; ?>" fieldname="short_name" value="<?php echo $v2['type_name']; ?>" style="width: 150px;"></td>
+                          <td><?php echo $v2['type_name']; ?></td> -->
+                          <td style="text-align: center;"><?php if($v2['status'] == 1): ?>是 <?php else: ?>否<?php endif; ?></td>
+                          <td style="text-align: center;"><input type="number" class="sort input-common input-common-sort" fieldid="<?php echo $v2['type_id']; ?>" fieldname="type_sort"  value="<?php echo $v2['type_sort']; ?>" size="1"></td>
+                          <td style="text-align: center;">
+                              <a class="btn btn-xs btn-info" href="<?php echo url('Goods/modifys',array('type_id'=>$v2['type_id'])); ?>">
+                                  <i class="ace-icon fa fa-pencil bigger-120"></i>
+                              </a>
+                              <button class="btn btn-xs btn-danger" type="button" onclick="dels(<?php echo $v2['type_id']; ?>)">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                              </button>
+                          </td>
+                        </tr>
+                        
+                          <?php if(is_array($v2['list_three']) || $v2['list_three'] instanceof \think\Collection || $v2['list_three'] instanceof \think\Paginator): if( count($v2['list_three'])==0 ) : echo "" ;else: foreach($v2['list_three'] as $key=>$v3): ?>
+                          <tr class="pid_<?php echo $v2['type_id']; ?> pid_<?php echo $v1['type_id']; ?>" style="height: 30px;display:none;" data-category-id="<?php echo $v3['type_id']; ?>" data-pid="<?php echo $v3['pid']; ?>" data-level="<?php echo $v3['level']; ?>">
+                            <td></td>
+                            
+                            <td><span style="color:#ccc;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|——</span> <input class="input-common middle" type="text" fieldid="<?php echo $v3['type_id']; ?>" fieldname="type_name" value="<?php echo $v3['type_name']; ?>" style="width: 150px;"></td>
+                            <!-- <td><input type="text" class="input-common middle" fieldid="<?php echo $v3['type_id']; ?>" fieldname="short_name" value="<?php echo $v3['type_name']; ?>" style="width: 150px;"></td>
+                            <td><?php echo $v3['type_name']; ?></td> -->
+                            <td style="text-align: center;"><?php if($v2['status'] == 1): ?>是 <?php else: ?>否<?php endif; ?></td>
+                            <td style="text-align: center;"><input type="number" class="sort input-common input-common-sort" fieldid="<?php echo $v3['type_id']; ?>" fieldname="type_sort"  value="<?php echo $v3['type_sort']; ?>" size="1"></td>
+                            <td style="text-align: center;">
+                                <a class="btn btn-xs btn-info" href="<?php echo url('Goods/modifys',array('type_id'=>$v3['type_id'])); ?>">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </a>
+                                <button class="btn btn-xs btn-danger" type="button" onclick="dels(<?php echo $v3['type_id']; ?>)">
+                                  <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                </button>
+                            </td>
+                          </tr>
+                          <?php endforeach; endif; else: echo "" ;endif; endforeach; endif; else: echo "" ;endif; endforeach; endif; else: echo "" ;endif; ?>
+                            </tbody>
+                  </table>
                   
-                  <th>ID</th>
-                  <th class="hidden-480">排序</th>
-                  <th>分类名称</th>
-                  <th>分类图标</th>
-                  <th style="border-right:#ddd solid 1px;">操作</th>
-                </tr>
-                </thead>
-                <form id="sortForm" action="<?php echo url('Goods/goods_sort'); ?>" method="post">
-                <tbody>
-                <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
-                <tr>
-                 
-                  <td><span class="badge badge-grey"><?php echo $v['type_id']; ?></span></td>
-                  <td class="hidden-480"><input class="input-small" type="number" name="<?php echo $v['type_id']; ?>" value="<?php echo $v['type_sort']; ?>"></td>
-                  <td><?php echo $v['type_name']; ?></td>
-                   <td class="ace-thumbnails hidden-480">
-                    <li><a href="<?php echo $v['type_image']; ?>" data-rel="colorbox">
-                      <img width="80" height="80" alt="150x150" src="<?php echo $v['type_image']; ?>"/>
-                      <div class="text">
-                        <div class="inner">点击放大</div>
-                      </div>
-                    </a></li>
-                  </td>
-                  <td>
-                    <button class="btn btn-xs btn-info" type="button" onclick="ajaxQuery('modify',<?php echo $v['type_id']; ?>,readData)">
-                      <i class="ace-icon fa fa-pencil bigger-120"></i>
-                    </button>
-                    <button class="btn btn-xs btn-danger" type="button" onclick="dels(<?php echo $v['type_id']; ?>)">
-                      <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                    </button>
-                  </td>
-                </tr>
-                <?php endforeach; endif; else: echo "" ;endif; if(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty())): ?><tr><td colspan="10" class="text-center">暂无数据</td></tr><?php endif; ?>
-                </tbody>
-                </form>
+                  
+                  <div class="options-btn" id="saveNewAddedCategory" style="display: none;">
+                    <button class="btn btn-info btn-white btn-bold">保存</button>
+                  </div>
+                  
               </table>
               <div class="text-center">
               </div>
@@ -551,45 +669,7 @@ $(function(){
       </div><!-- /.page-content -->
     </div>
   </div><!-- /.main-content -->
-  <!-- Modal -->
-  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-          aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加</h4>
-        </div>
-        <div class="modal-body">
-          <form id="modal-form" class="form-horizontal" action="<?php echo url('Goods/save_type'); ?>" method="post" enctype="multipart/form-data">
-            
-            <div class="form-group">
-              <label class="col-sm-2 control-label no-padding-right" for="">分类名称</label>
-              <div class="col-sm-8">
-                <input id="name" class="form-control" type="text" name="type_name" required>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-sm-2 control-label no-padding-right" for="">分类图标</label>
-              <div class="col-xs-8">
-                <input multiple="" type="file" id="pic" name="image" />
-                <img src="" id="image" class="img-responsive" />
-              </div>
-            </div>
-            
-            <input id="id" type="hidden">
-            
-             <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button  type="submit" class="btn btn-primary">保存</button>
-        </div>
-          </form>
-        </div>
-       
-      </div>
-    </div>
-  </div>
+  
 
   <div class="footer">
   <div class="footer-inner">
@@ -622,7 +702,253 @@ $(function(){
   <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
 </div><!-- /.main-container -->
+<script>
 
+$(".table-hover tr[data-category-id] input").change(function(){
+	var fieldid = $(this).attr('fieldid');
+	var fieldname = $(this).attr('fieldname');
+	var fieldvalue = $(this).val();
+	if(fieldvalue == ''){
+		layer.msg("不能为空");return false;
+	}else{
+		$.ajax({
+			type:"post",
+			url:"<?php echo url('Goods/usave_types'); ?>",
+			data:{'fieldid':fieldid,'fieldname':fieldname,'fieldvalue':fieldvalue},
+			success: function (data) {
+				if(data.code>0){
+					layer.msg("修改成功");
+				}else{
+					layer.msg("修改失败");
+				}
+			}
+		});
+	}
+});
+
+  function addChildGoodsCategory(obj, level, pid){
+	html = '<tr class="new-added pid_'+pid+'" data-level="'+level+'" data-pid="'+pid+'">';
+		html += '<td></td>';
+		
+		if(level == 1){
+			//分类名称
+			html += '<td style="text-align: left;">';
+			html += '<input class="input-common middle" type="text"  value="" name="categoryName"></td>';
+			//分类简称
+			// html += '<td style="text-align: left;">';
+			// 	html += '<input class="input-common middle" type="text" name="categoryShortName"  value="" >';
+			// html += '</td>';
+		}else if(level == 2){
+			//分类名称
+			html += '<td style="text-align: left;">';
+			html += '<span style="color:#ccc;">|——</span> <input class="input-common middle" type="text" name="categoryName"  value=""></td>';
+			// //分类简称
+			// html += '<td style="text-align: left;">';
+			// 	html += '<input class="input-common middle" type="text"  value="" name="categoryShortName">';
+			// html += '</td>';
+		}else if(level == 3){
+			//分类名称
+			html += '<td style="text-align: left;">';
+			html += '<span style="color:#ccc;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|——</span><input class="input-common middle" type="text"  value="" name="categoryName">';
+			html += '</td>';
+			//分类名称
+			// html += '<td style="text-align: left;">';
+			// 	html += '<input class="input-common middle" type="text"  value="" name="categoryShortName">';
+			// html += '</td>';
+		}
+	//	html += '<td style="text-align: center;"></td>';
+		html += '<td style="text-align: center;">是</td>';
+		html += '<td style="text-align: center;">';
+			html += '<input type="number" class="sort input-common input-common-sort" name="categorySort" value="50" >';
+		html += '</td>';
+		html += '<td style="text-align: center;"><a href="javascript:void(0);" onclick="delNewAddedCategory(this)">删除</a></td>';
+	html += '</tr>';
+
+	$(obj).parents("tr").after(html);
+
+	$("#saveNewAddedCategory").show();
+}
+
+
+
+function tab_switch(module_id){
+	if($(".pid_"+module_id).css('display') != 'none'){
+		$(".tab_jian_"+module_id).hide();
+		$(".tab_jia_"+module_id).show();
+		$(".pid_"+module_id).hide(300);
+	}else{
+		$(".tab_jian_"+module_id).show();
+		$(".tab_jia_"+module_id).hide();
+		$(".pid_"+module_id).show(500);
+	}
+}
+
+//删除新增分类
+function delNewAddedCategory(event){
+	$(event).parents("tr").remove();
+}
+
+var is_sub = false;
+$("body").on('click', '#saveNewAddedCategory button',function(event) {
+	var content = new Array();
+	$(".new-added").each(function(i, e) {
+		var sort = $(e).find("input[name='categorySort']").val();
+			sort = sort.length == 0 ? 0 : sort;
+		var categoryName = $(e).find("input[name='categoryName']").val();
+		var categoryShortName = $(e).find("input[name='categoryShortName']").val();
+		var level = $(e).attr("data-level");
+		var pid = $(e).attr("data-pid");
+		if(categoryName != ""){
+			var category_info_arr = new Object();
+				category_info_arr.sort = sort;
+				category_info_arr.categoryName = categoryName;
+				category_info_arr.categoryShortName = categoryShortName;
+				category_info_arr.level = level;
+				category_info_arr.pid = pid;
+				category_info_str = JSON.stringify(category_info_arr);
+			content.push(category_info_str);
+		}
+	});
+	content = JSON.stringify(content);
+
+	if(content.length == 2){
+		return;
+	}
+	
+	if(is_sub) return;
+	is_sub = true;
+	$.ajax({
+		type : "post",
+		url : "<?php echo url('Goods/save_types'); ?>",
+		data : { "content" : content },
+		success : function(data){
+			if(data["code"] > 0){
+				layer.msg("添加成功");
+				location.href = "<?php echo url('Goods/goods_type'); ?>";
+			}else{
+				layer.msg("添加失败");
+				location.href = "<?php echo url('Goods/goods_type'); ?>";
+			}
+		}
+	})
+});
+
+var is_click = false;
+function save(){
+	var category_name = $("#category_name").val();
+	var pid = $("#goods_category_pid").val();
+	var sort = $("#sort").val();
+	var short_name = $("#short_name").val();
+	if(verify( category_name,short_name, sort)){
+		if(is_click){
+			return false;
+		}
+		is_click = true;
+		$.ajax({
+			type : "post",
+			url : "<?php echo url('ADMIN_MAIN/goods/addgoodscategory'); ?>",
+			data : {
+				'category_name' : category_name,
+				'pid' : pid,
+				'keywords' : "",
+				'sort' : sort,
+				'description' : "",
+				'is_visible' : 1,
+				"category_pic" : "",
+				"short_name" : short_name,
+				"attr_id" : "",
+				"attr_name" : ""
+			},
+			success : function(data) {
+				
+				var parent = $(".table-class tbody tr[data-category-id='" + pid + "']");
+				var level = parseInt(parent.attr("data-level")) + 1;
+				
+				if (data["code"] > 0) {
+					
+					var parent_html = '';//父级展开合起开关
+					var select_html = '';//商品分类下拉框
+					
+					var pid_class = 'pid_' + pid;
+					if(level == 2){
+						//如果当前添加的是二级分类，则要更新商品分类下拉框列表
+						select_html = '<option value="' + data.code + '">&nbsp;&nbsp;&nbsp;&nbsp;' + category_name + '</option>';
+					}else if(level == 3){
+						pid_class = "pid_" + pid + " pid_" + parent.attr("data-pid");
+					}
+					
+					var html = '<tr class="' + pid_class + '" style="height: 30px;" data-category-id="' + data.code + '" data-pid="' + pid + '" data-level="' + level + '">';
+					
+							html += '<td></td>';
+								parent_html += '<a href="javascript:;" onclick="tab_switch(' + pid + ')" class="tab_jia_' + pid + '" style="display: block;"><i class="fa fa-plus-circle"></i></a>';
+								parent_html += '<a href="javascript:;" onclick="tab_switch(' + pid + ')" class="tab_jian_' + pid + '" style="display: none;"><i class="fa fa-minus-circle"></i></a>';
+							
+							html += '<td style="text-align: center;"><input type="number" class="sort input-common input-common-sort" fieldid="' + data.code + '" fieldname="sort" value="' + sort + '" size="1"></td>';
+
+							html += '<td>';
+								if(level == 2){
+									html += '<span style="color:#ccc;">|——</span>';
+								}else if(level == 3){
+									html += '<span style="color:#ccc;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|——</span>';
+								}
+								html += '<input class="input-common" type="text" fieldid="' + data.code + '" fieldname="category_name" value="' + category_name + '" style="width: 150px;">';
+								
+								if(level == 2){
+									html += '<a href="javascript:;" onclick="addChildGoodsCategory(' + data.code + ');">添加子分类</a>';
+								}
+							html += '</td>';
+							
+							html += '<td><input class="input-common" type="text" fieldid="' + data.code + '" fieldname="short_name" value="' + short_name + ' " style="width: 150px;"></td>';
+							
+							html += '<td></td>';
+							
+							html += '<td style="text-align: center;">是</td>';
+							
+							html += '<td style="text-align: center;">';
+								html += '<a href="' + ("/goods/updategoodscategory?category_id=" + data.code) + '">修改</a>';
+									html += '<a href="javascript:void(0);" onclick="delCategory(' + data.code + ')">删除</a>';
+							html += '</td>';
+						html += '</tr>';
+				
+					if($(".pid_" + pid).length == 0){
+						$(".table-class tbody tr[data-category-id='" + pid+ "']").after(html);
+					}else{
+						var last_pid = ".pid_" + pid + ":last";
+						$(last_pid).after(html);
+					}
+					
+					parent.find("td:first").html(parent_html);
+
+					$(".tab_jian_" + pid).show();
+					$(".tab_jia_" + pid).hide();
+					$(".pid_" + pid).show(500);
+
+					$("#goods_category_pid").append(select_html);
+					$("#addChildGoodsCategory").modal("hide");
+					
+					$("#category_name").val("");
+					$("#short_name").val("");
+					$("#sort").val(0);
+					showTip(data['message'],"success");
+				}else{
+					showTip(data['message'],"error");
+				}
+				is_click = false;
+			}
+		});
+	}
+}
+
+function closeAddGoodsCategory(){
+	is_click = false;
+	$("#addChildGoodsCategory").modal("hide");
+}
+
+$("body").on("click",".modal-backdrop",function(){
+	closeAddGoodsCategory();
+});
+
+</script>
 
 <script>
   jQuery(function($) {
@@ -634,6 +960,9 @@ $(function(){
         delay: 250
       }
     });
+
+ 
+    
 
   })
 </script>
@@ -671,9 +1000,21 @@ $(function(){
 </script>
 <script type="text/javascript">
 		function dels(id){
-			layer.confirm('你确定删除分类及分类下的产品吗', {icon: 3}, function(index){
+			layer.confirm('你确定删除吗', {icon: 3}, function(index){
 		    layer.close(index);
-		    window.location.href="/admin/goods/delete_type/id/"+id;
+		      $.ajax({
+            type:"post",
+            url:"<?php echo url('Goods/delete_types'); ?>",
+            data:{'type_id':id},
+            success: function (data) {
+              // if(data.code>0){
+              //   layer.msg("删除成功");
+              // }else{
+              //   layer.msg("删除失败");
+              // }
+            }
+          });
+		  //  window.location.href="/admin/goods/delete_type/id/"+id;
 		  });
 	    }
 		</script>

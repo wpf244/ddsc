@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\login\index.html";i:1534735438;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1536572465;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\www\12_03_ddsc\public/../application/admin\view\login\index.html";i:1544500670;s:59:"D:\www\12_03_ddsc\application\admin\view\public\header.html";i:1544085067;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -40,6 +40,7 @@
 <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 <![endif]-->
 <link rel="stylesheet" href="/static/admin/css/style.min.css">
+<link rel="stylesheet" href="/static/admin/css/input.css">
 
 <!-- inline styles related to this page -->
  <!-- <link rel="stylesheet" href="/static/admin/layui/css/layui.css"  media="all"> -->
@@ -56,7 +57,8 @@
 
 <!--[if !IE]> -->
 <script src="/static/admin/assets/js/jquery-2.1.4.min.js"></script>
-
+<script src="/static/admin/js/input.js"></script>
+<script src="/static/admin/js/zh.js"></script>
 
 <!-- <![endif]-->
 
@@ -187,6 +189,20 @@
 														</span>
                       </label>
 
+                      <label class="block clearfix">
+                          <span class="block input-icon input-icon-right">
+                              <input type="text" name="verify" id="verify" placeholder="验证码"  class="form-control"/>
+                              <i class="ace-icon fa fa-barcode blue"></i>
+                          </span>
+                    </label>
+
+                     
+                        
+                        <!-- 验证码可根据需要调整大小 -->
+                        <div class="form-group">
+                            <?php echo captcha_img(); ?>
+                        </div>
+
                       <div class="space"></div>
 
                       <div class="clearfix">
@@ -288,6 +304,15 @@
 
 
 <script type="text/javascript">
+
+$(function(){
+	var img = $("#verify_img");
+	var src = img.attr("src")+"?";
+	img.click(function(){
+		img.attr("src",src+Math.random());
+	});
+});
+
   jQuery(function($) {
     $(document).on('click', '.toolbar a[data-target]', function(e) {
       e.preventDefault();

@@ -28,11 +28,31 @@ class BaseAdmin extends Controller{
         $sys=db('sys')->where("id=1")->find();
         $this->assign("sys",$sys);
         
-        $admin=db('admin')->where("id=1")->find();
+        $uid=session('uid');
+        $admin=db('admin')->where("id=$uid")->find();
         $this->assign("admin",$admin);
+
+        $level=$admin['level'];
+        if($level == 0){
+            $controls=db("carte")->where("pid=0")->order("c_sort asc")->select();
+            foreach($controls as $ks=> $vs){
+                $controls[$ks]['ways']=db("carte")->where("pid={$vs['cid']}")->order("c_sort asc")->select();
+            }
+            $this->assign("controls",$controls);
+        }else{
+            $controls_arr=explode(",",$admin['control']);
+            $way_arr=explode(",",$admin['way']);
+
+            $controls=db("carte")->where(array("cid"=>array("in",$controls_arr)))->order("c_sort asc")->select();
+            foreach($controls as $ks => $vs){
+                $controls[$ks]['ways']=db("carte")->where(array("cid"=>array("in",$way_arr)))->where("pid={$vs['cid']}")->order("c_sort asc")->select();
+            }
+            $this->assign("controls",$controls);
+        }
         
         $this->logs=new Sever();
-       
-       
+        
+
+        
     }
 }

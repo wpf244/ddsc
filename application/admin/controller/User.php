@@ -3,327 +3,146 @@ namespace app\admin\controller;
 
 class User extends BaseAdmin
 {
-    //总代理
-    public function index()
-    {
-        $phone=\input('phone');
-        if($phone){
-            $map['phone']=array("like",'%'.$phone.'%');
-            $map['level']=3;
-        }else{
-            $phone="";
-            $map['level']=3;
-        }
-        $this->assign("phone",$phone);
-        $list=db("user")->order("uid desc")->where($map)->paginate(10,false,['query'=>request()->param()]);
-        //初始返积分
-        $score=db('score')->where('id=1')->find()['integ'];
-        foreach($list as $k=>$v){
-            $integf=$v['integf'];//本账户 每日返分比例
-            $bili=($score+$integf)/1000;//总返积分比例
-            $integs=number_format($bili*$v['integ_zong'],2);//返积分数=比例*总积分 保留两位小数
-            if($v['integz'] != 0){
-                $v['integ_f']=$integs;
-            }else{
-                $v['integ_f']=$v['integf'];
-            }
-            $list[$k]=$v;
-        }
+   public function lister()
+   {
+        $list=db("admin")->select();
+        $this->assign("list",$list);    
 
-        $this->assign("list",$list);
-        
-        $page=$list->render();
-        $this->assign("page",$page);
-        
-        return \view('index');
-    }
-    //经销商
-    public function index_j()
-    {
-        $phone=\input('phone');
-        if($phone){
-            $map['phone']=array("like",'%'.$phone.'%');
-            $map['level']=2;
-        }else{
-            $phone="";
-            $map['level']=2;
-        }
-        $this->assign("phone",$phone);
-        $list=db("user")->order("uid desc")->where($map)->paginate(10,false,['query'=>request()->param()]);
-        //初始返积分
-        $score=db('score')->where('id=1')->find()['integ'];
-        foreach($list as $k=>$v){
-            if($v['integz'] != 0){
-                $v['integ_f']=($score+$v['integf']);
-            }else{
-                $v['integ_f']=$v['integf'];
-            }
-            $list[$k]=$v;
-        }
-
-        $this->assign("list",$list);
-
-        $page=$list->render();
-        $this->assign("page",$page);
-
-        return \view('index_j');
-    }
-    //普通会员
-    public function index_p()
-    {
-        $phone=\input('phone');
-        if($phone){
-            $map['phone']=array("like",'%'.$phone.'%');
-            $map['level']=1;
-        }else{
-            $phone="";
-            $map['level']=1;
-        }
-        $this->assign("phone",$phone);
-        $list=db("user")->order("uid desc")->where($map)->paginate(10,false,['query'=>request()->param()]);
-        //初始返积分
-        $score=db('score')->where('id=1')->find()['integ'];
-        foreach($list as $k=>$v){
-            if($v['integz'] != 0){
-                $v['integ_f']=($score+$v['integf']);
-            }else{
-                $v['integ_f']=$v['integf'];
-            }
-            $list[$k]=$v;
-        }
-
-        $this->assign("list",$list);
-
-        $page=$list->render();
-        $this->assign("page",$page);
-
-        return \view('index_p');
-    }
-    //增加用户待返积分
-    public function add_integz()
-    {
-       if($this->request->isAjax()){
-           $uid=\input('id');
-           $integz=\input("integz");
-           $re=db("user")->where("uid=$uid")->find();
-           if($re){
-               $res=db("user")->where("uid=$uid")->setInc("integz",$integz);
-               db("user")->where("uid=$uid")->setInc("integ_zong",$integz);
-               $data['uid']=$uid;
-               $data['type']="系统赠送待返积分".$integz;
-               $data['integ']=$integz;
-               $data['time']=\time();
-               $data['status']=1;
-               db("ji_log")->insert($data);
-               if($res){
-                   echo '1';
-               }else{
-                   echo '2';
-               }
-           }else{
-               echo '3';
-           }
+        return  $this->fetch();
+   }
+   public function add()
+   {
+       return  $this->fetch();
+   }
+   public function save()
+   {
+       $username=input('username');
+       $re=db("admin")->where("username='$username'")->find();
+       if($re){
+           $this->error("此账号已存在",url('lister'));
        }else{
-           echo '0';
+           $data=input('post.');
+           $data['pwd']=md5($data['pwd']);
+           $rea=db("admin")->insert($data);
+           if($rea){
+               $this->success("添加成功",url('lister'));
+           }else{
+            $this->error("添加失败",url('lister'));
+           }
        }
-       
+   } 
+   public function change()
+   {
+       $id=input('id');
+       $re=db("admin")->where("id=$id")->find();
+       if($re){
+           if($re['level'] == 0){
+               echo '0';
+           }else{
+               echo '1';
+           }
+
+       }else{
+           echo '2';
+       }
+   } 
+    public function modifys()
+    {
+        $id=input('id');
+        $re=db("admin")->where("id=$id")->find();
+        $this->assign("re",$re);
+        return $this->fetch();
     }
-    /*//增加用户每日释放积分
-    public function add_integf()
+    public function usave()
     {
-        if($this->request->isAjax()){
-            $uid=\input('id');
-            $integz=\input("integz");
-            $re=db("user")->where("uid=$uid")->find();
-            if($re){
-                $res=db("user")->where("uid=$uid")->setInc("integf",$integz);
-                db("user")->where("uid=$uid")->setInc("integ_zong",$integz);
-                if($res){
-                    echo '1';
-                }else{
-                    echo '2';
-                }
-            }else{
-                echo '3';
-            }
+        $id=input('id');
+        $re=\db("admin")->where("id=$id")->find();
+        if($re){
+             $pwd=input('pwd');
+             if(!empty($pwd)){
+                 $data['pwd']=md5($pwd);
+             }
+             $data['username']=input('username');
+             $data['level']=input('level');
+             $res=\db("admin")->where("id=$id")->update($data);
+             if($res){
+                $this->success("修改成功",url('lister'));
+             }else{
+                $this->error("修改失败",url('lister'));
+             }
         }else{
-            echo '0';
+            $this->error("参数错误",url("lister"));
         }
-         
-    }*/
-    //增加用户可用积分
-    public function add_integ()
-    {
-        if($this->request->isAjax()){
-            $uid=\input('id');
-            $integz=\input("integz");
-            $re=db("user")->where("uid=$uid")->find();
-            if($re){
-                $res=db("user")->where("uid=$uid")->setInc("integ",$integz);
-                 
-                $data['uid']=$uid;
-                $data['type']="系统赠送积分".$integz;
-                $data['integ']=$integz;
-                $data['time']=\time();
-                $data['status']=1;
-                db("ji_log")->insert($data);
-                if($res){
-                    echo '1';
-                }else{
-                    echo '2';
-                }
-            }else{
-                echo '3';
-            }
-        }else{
-            echo '0';
-        }
-         
     }
-
-    //减少用户待返积分
-    public function min_integz()
-    {
-        if($this->request->isAjax()){
-            $uid=\input('id');
-            $integz=\input("integz");
-            $re=db("user")->where("uid=$uid")->find();
-            if($re){
-                $res=db("user")->where("uid=$uid")->setDec("integ_zong",$integz);
-                db("user")->where("uid=$uid")->setDec("integ_zong",$integz);
-
-                $data['uid']=$uid;
-                $data['type']="系统扣除待返积分".$integz;
-                $data['integ']=$integz;
-                $data['time']=\time();
-                $data['status']=1;
-                db("ji_log")->insert($data);
-                if($res){
-                    echo '1';
-                }else{
-                    echo '2';
-                }
-            }else{
-                echo '3';
-            }
-        }else{
-            echo '0';
-        }
-
-    }
-    /*//减少用户每日释放积分
-    public function min_integf()
-    {
-        if($this->request->isAjax()){
-            $uid=\input('id');
-            $integz=\input("integz");
-            $re=db("user")->where("uid=$uid")->find();
-            if($re){
-                $res=db("user")->where("uid=$uid")->setDec("integf",$integz);
-                db("user")->where("uid=$uid")->setDec("integ_zong",$integz);
-                if($res){
-                    echo '1';
-                }else{
-                    echo '2';
-                }
-            }else{
-                echo '3';
-            }
-        }else{
-            echo '0';
-        }
-
-    }*/
-    //减少用户可用积分
-    public function min_integ()
-    {
-        if($this->request->isAjax()){
-            $uid=\input('id');
-            $integz=\input("integz");
-            $re=db("user")->where("uid=$uid")->find();
-            if($re){
-                $res=db("user")->where("uid=$uid")->setDec("integ",$integz);
-
-                $data['uid']=$uid;
-                $data['type']="系统扣除积分".$integz;
-                $data['integ']=$integz;
-                $data['time']=\time();
-                $data['status']=1;
-                db("ji_log")->insert($data);
-                if($res){
-                    echo '1';
-                }else{
-                    echo '2';
-                }
-            }else{
-                echo '3';
-            }
-        }else{
-            echo '0';
-        }
-
-    }
-
-
-    //积分明细
-    public function detail()
-    {
-        $id=\input('id');
-        $list=db("ji_log")->where("uid=$id")->order("id desc")->paginate(10,false,['query'=>request()->param()]);
-        $this->assign("list",$list);
-        
-        $page=$list->render();
-        $this->assign("page",$page);
-        
-        return \view('detail');
-    }
-    //下级代理
-    public function lister()
-    {
-        $phone=\input('phone');
-        if($phone){
-            $map['phone']=array("like",'%'.$phone.'%');
-        }else{
-            $phone="";
-            $map=[];
-        }
-        $this->assign("phone",$phone);
-        $id=\input('id');
-        $list=db("user")->order("uid desc")->where("fid=$id")->where($map)->paginate(10,false,['query'=>request()->param()]);
-        $this->assign("list",$list);
-        
-        $page=$list->render();
-        $this->assign("page",$page);
-        
-        return \view("lister");
-    }
-    //删除会员
     public function delete()
     {
-        $id=\input('id');
-        $re=db("user")->where("uid=$id")->find();
+        $id=input('id');
+        $re=\db("admin")->where("id=$id")->find();
         if($re){
-            $del=db("user")->where("uid=$id")->delete();
-            $car=db("car")->where("uid=$id")->select();
-            if($car){
-                $del_car=db("car")->where("uid=$id")->delete();
-            }
-            $car_dd=db("car_dd")->where("uid=$id")->select();
-            if($car_dd){
-                $del_car_dd=db("car_dd")->where("uid=$id")->delete();
-            }
-            $this->redirect('index');
+          if($id == 1){
+              echo '1';
+          }else{
+              $del=\db("admin")->where("id=$id")->delete();
+              echo '0';
+          }
         }else{
-            $this->redirect('index');
+            echo '2';
         }
     }
-    
-    
-    
-    
-    
-    
-    
+    public function power()
+    {
+        $list=db("carte")->where("pid=0")->select();
+        foreach($list as $k => $v){
+            $list[$k]['lists']=db("carte")->where("pid={$v['cid']}")->select();
+        }
+        $this->assign("list",$list);
+
+        $id=input('id');
+        $admin=db("admin")->where("id=$id")->find();
+        $this->assign("admin",$admin);
+
+        $control=$admin['control'];
+        $control_arr=explode(",",$control);
+        $this->assign("control_arr",$control_arr);
+
+        $way=$admin['way'];
+        $way_arr=explode(",",$way);
+        $this->assign("way_arr",$way_arr);
+        
+        return $this->fetch();
+    }
+    public function power_save()
+    {
+        $id=\input('id');
+        $re=\db("admin")->where("id=$id")->find();
+        if($re){
+          
+            $control=\input('controller/a');
+            $way=\input('function/a');
+
+            $data['control']=implode(",",array_keys($control));
+            $data['way']=implode(",",array_keys($way));
+            
+            $res=\db("admin")->where("id=$id")->update($data);
+            if($res){
+               $this->success("权限配置成功",url('lister'));
+            }else{
+                $this->error("权限配置失败",url('lister'));
+            }
+            
+        }else{
+            $this->error("非法操作",url('lister'));
+        }
+
+        
+    }
+
+
+
+
+
+
+
     
     
     
